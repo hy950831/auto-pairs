@@ -348,10 +348,19 @@ func! AutoPairsJump()
   let [bufnum, lnum, cnum, offn, curswant] = getcurpos()
   let to_append = [bufnum, lnum, cnum + 1, offn, curswant]
   let succ_found = search('["\]'')}]','W')
-
   if succ_found
     call add(b:autopairs_saved_jump_loc, to_append)
   end
+endf
+
+func! AutoPairsJumpBack()
+  if len(b:autopairs_saved_jump_loc) == 0
+      return ''
+  end
+  let pos = get(b:autopairs_saved_jump_loc, -1)
+  call remove(b:autopairs_saved_jump_loc, -1)
+  call setpos('.', pos)
+  return ''
 endf
 
 func! AutoPairsMoveCharacter(key)
@@ -365,16 +374,6 @@ func! AutoPairsBackInsert()
   let pos  = b:autopairs_saved_pair[1]
   call setpos('.', pos)
   return pair
-endf
-
-func! AutoPairsJumpBack()
-  if len(b:autopairs_saved_jump_loc) == 0
-      return ''
-  end
-  let pos = get(b:autopairs_saved_jump_loc, -1)
-  call remove(b:autopairs_saved_jump_loc, -1)
-  call setpos('.', pos)
-  return ''
 endf
 
 func! AutoPairsReturn()
