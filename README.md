@@ -4,11 +4,20 @@ Insert or delete brackets, parens, quotes in pair.
 
 Installation
 ------------
+<<<<<<< HEAD
 copy plugin/auto-pairs.vim to ~/.vim/plugin
 
 or if you are using `pathogen`:
 
 ```git clone git://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs```
+=======
+
+* Manual
+  * Copy `plugin/auto-pairs.vim` to `~/.vim/plugin`
+* [Pathogen](https://github.com/tpope/vim-pathogen)
+  * `git clone git://github.com/jiangmiao/auto-pairs.git ~/.vim/bundle/auto-pairs`
+* [Vundle](https://github.com/VundleVim/Vundle.vim)
+  * `Plugin 'jiangmiao/auto-pairs'`
 
 Features
 --------
@@ -27,7 +36,6 @@ Features
         input: {|} (press <CR> at |)
         output: {
             |
-        }
 
 *   Insert spaces before closing characters, only for [], (), {}
 
@@ -57,13 +65,6 @@ Features
 
 *   Fast Wrap
 
-        input: |'hello' (press (<M-e> at |)
-        output: ('hello')
-
-        wrap string, only support c style string
-        input: |'h\\el\'lo' (press (<M-e> at |)
-        output ('h\\ello\'')
-
         input: |[foo, bar()] (press (<M-e> at |)
         output: ([foo, bar()])
 
@@ -88,25 +89,6 @@ Features
         {
 
         }|
-
-*   Support ``` ''' and """
-
-        input:
-            '''
-
-        output:
-            '''|'''
-
-*   Delete Repeated Pairs in one time
-
-        input: """|""" (press <BS> at |)
-        output: |
-
-        input: {{|}} (press <BS> at |)
-        output: |
-
-        input: [[[[[[|]]]]]] (press <BS> at |)
-        output: |
 
 *  Fly Mode
 
@@ -175,7 +157,11 @@ Options
 -------
 *   g:AutoPairs
 
+<<<<<<< HEAD
         Default: {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+=======
+        Default: {'(':')', '[':']', '{':'}',"'":"'",'"':'"', "`":"`", '```':'```', '"""':'"""', "'''":"'''"}
+>>>>>>> upstream/master
 
 *   b:AutoPairs
 
@@ -299,7 +285,6 @@ TroubleShooting
     To fix the issue, you need remap or disable the related shortcut.
 
 Known Issues
------------------------
 Breaks '.' - [issue #3](https://github.com/jiangmiao/auto-pairs/issues/3)
 
     Description: After entering insert mode and inputing `[hello` then leave insert
