@@ -342,6 +342,10 @@ func! AutoPairsFastWrap()
 endf
 
 func! AutoPairsJump()
+  let [bufnum, lnum, cnum, offn, curswant] = getcurpos()
+
+  let b:autopairs_saved_jump_loc = [bufnum, lnum, cnum + 1, offn, curswant]
+
   call search('["\]'')}]','W')
 endf
 
@@ -356,6 +360,12 @@ func! AutoPairsBackInsert()
   let pos  = b:autopairs_saved_pair[1]
   call setpos('.', pos)
   return pair
+endf
+
+func! AutoPairsJumpBack()
+  let pos  = b:autopairs_saved_jump_loc
+  call setpos('.', pos)
+  return ''
 endf
 
 func! AutoPairsReturn()
@@ -537,6 +547,10 @@ func! AutoPairsInit()
     execute 'inoremap <buffer> <silent> '.g:AutoPairsShortcutBackInsert.' <C-R>=AutoPairsBackInsert()<CR>'
   end
 
+  if g:AutoPairsShortcutBackInsert != ''
+    execute 'inoremap <buffer> <silent> '.g:AutoPairsShortcutJumpBack.' <C-R>=AutoPairsJumpBack()<CR>'
+  end
+
   if g:AutoPairsShortcutToggle != ''
     " use <expr> to ensure showing the status when toggle
     execute 'inoremap <buffer> <silent> <expr> '.g:AutoPairsShortcutToggle.' AutoPairsToggle()'
@@ -544,8 +558,8 @@ func! AutoPairsInit()
   end
 
   if g:AutoPairsShortcutJump != ''
-    " execute 'inoremap <buffer> <silent> ' . g:AutoPairsShortcutJump. ' <ESC>:call AutoPairsJump()<CR>a'
-    execute 'noremap <buffer> <silent> ' . g:AutoPairsShortcutJump. ' :call AutoPairsJump()<CR>'
+    execute 'inoremap <buffer> <silent> ' . g:AutoPairsShortcutJump. ' <ESC>:call AutoPairsJump()<CR>a'
+    " execute 'noremap <buffer> <silent> ' . g:AutoPairsShortcutJump. ' :call AutoPairsJump()<CR>'
   end
 
   if &keymap != ''
