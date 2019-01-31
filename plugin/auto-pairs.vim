@@ -7,6 +7,9 @@
 " Repository: https://github.com/jiangmiao/auto-pairs
 " License: MIT
 
+let b:autopairs_saved_jump_loc = []
+
+
 if exists('g:AutoPairsLoaded') || &cp
   finish
 end
@@ -343,10 +346,12 @@ endf
 
 func! AutoPairsJump()
   let [bufnum, lnum, cnum, offn, curswant] = getcurpos()
+  let to_append = [bufnum, lnum, cnum + 1, offn, curswant]
+  let succ_found = search('["\]'')}]','W')
 
-  let b:autopairs_saved_jump_loc = [bufnum, lnum, cnum + 1, offn, curswant]
-
-  call search('["\]'')}]','W')
+  if succ_found
+    call add(b:autopairs_saved_jump_loc, to_append)
+  end
 endf
 
 func! AutoPairsMoveCharacter(key)
@@ -363,7 +368,11 @@ func! AutoPairsBackInsert()
 endf
 
 func! AutoPairsJumpBack()
-  let pos  = b:autopairs_saved_jump_loc
+  if len(b:autopairs_saved_jump_loc) == 0
+      return ''
+  end
+  let pos = get(b:autopairs_saved_jump_loc, -1)
+  call remove(b:autopairs_saved_jump_loc, -1)
   call setpos('.', pos)
   return ''
 endf
@@ -652,6 +661,5 @@ endf
 " Always silent the command
 inoremap <silent> <SID>AutoPairsReturn <C-R>=AutoPairsReturn()<CR>
 imap <script> <Plug>AutoPairsReturn <SID>AutoPairsReturn
-
 
 au BufEnter * :call AutoPairsTryInit()
