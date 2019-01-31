@@ -7,9 +7,6 @@
 " Repository: https://github.com/jiangmiao/auto-pairs
 " License: MIT
 
-let b:autopairs_saved_jump_loc = []
-
-
 if exists('g:AutoPairsLoaded') || &cp
   finish
 end
@@ -597,6 +594,7 @@ func! AutoPairsTryInit()
     return
   end
 
+  let b:autopairs_saved_jump_loc = []
   " for auto-pairs starts with 'a', so the priority is higher than supertab and vim-endwise
   "
   " vim-endwise doesn't support <Plug>AutoPairsReturn
