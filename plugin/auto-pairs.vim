@@ -96,6 +96,10 @@ if !exists('g:AutoPairsShortcutBackInsert')
   let g:AutoPairsShortcutBackInsert = '<M-b>'
 endif
 
+if !exists('g:AutoPairsShortcutJumpBack')
+  let g:AutoPairsShortcutJumpBack = ''
+endif
+
 if !exists('g:AutoPairsSmartQuotes')
   let g:AutoPairsSmartQuotes = 1
 endif
@@ -580,7 +584,7 @@ func! AutoPairsInit()
     execute 'inoremap <buffer> <silent> '.g:AutoPairsShortcutBackInsert.' <C-R>=AutoPairsBackInsert()<CR>'
   end
 
-  if g:AutoPairsShortcutBackInsert != ''
+  if g:AutoPairsShortcutJumpBack != ''
     execute 'inoremap <buffer> <silent> '.g:AutoPairsShortcutJumpBack.' <C-R>=AutoPairsJumpBack()<CR>'
   end
 
